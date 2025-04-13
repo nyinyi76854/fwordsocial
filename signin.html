@@ -182,15 +182,18 @@ const db = firebase.firestore();
 // Handle Sign In with Popup
 document.getElementById("googleSignInBtn").addEventListener("click", function () {
     const provider = new firebase.auth.GoogleAuthProvider();
+auth.signInWithRedirect(provider)
 
-    auth.signInWithPopup(provider)
-        .then((result) => {
-            const user = result.user;
-            checkUserInDatabase(user.email);
-        })
-        .catch(error => {
-            document.getElementById("error-message").textContent = "Error: " + error.message;
-        });
+    auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      checkUserInDatabase(result.user.email);
+    }
+  })
+  .catch((error) => {
+    document.getElementById("error-message").textContent = "Error: " + error.message;
+  });
+
 });
 
 
