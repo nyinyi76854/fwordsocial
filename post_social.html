@@ -409,6 +409,27 @@ video::-webkit-media-controls {
 .cancel-btn {
     background: #dc3545;
 }
+       .logout-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 14px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 1000;
+}
+
+.logout-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
    </style>
 </head>
 <body>
@@ -444,6 +465,10 @@ video::-webkit-media-controls {
     <button class="create-post-btn" onclick="openPostDialog()">
         <i class="fas fa-plus"></i>
     </button>
+<!-- Floating Logout Button (Left-Bottom) -->
+<button class="logout-btn" onclick="logout()">
+    <i class="fas fa-sign-out-alt"></i>
+</button>
 
     <!-- Post Creation Modal -->
     <div id="postModal" class="modal">
@@ -537,6 +562,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchUsersAndDisplay(); // Load all users initially
 });
+function logout() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = "signin";
+    }).catch((error) => {
+        alert("Error signing out: " + error.message);
+    });
+}
 
 function fetchUsersAndDisplay() {
     const searchQuery = document.getElementById("searchInput").value.toLowerCase();
