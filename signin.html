@@ -182,18 +182,15 @@ const db = firebase.firestore();
 // Handle Sign In with Popup
 document.getElementById("googleSignInBtn").addEventListener("click", function () {
     const provider = new firebase.auth.GoogleAuthProvider();
-auth.signInWithRedirect(provider)
 
-    auth.getRedirectResult()
-  .then((result) => {
-    if (result.user) {
-      checkUserInDatabase(result.user.email);
-    }
-  })
-  .catch((error) => {
-    document.getElementById("error-message").textContent = "Error: " + error.message;
-  });
-
+    auth.signInWithPopup(provider)
+        .then((result) => {
+            const user = result.user;
+            checkUserInDatabase(user.email);
+        })
+        .catch(error => {
+            document.getElementById("error-message").textContent = "Error: " + error.message;
+        });
 });
 
 
@@ -213,7 +210,7 @@ const textElement = document.getElementById("changingText");
 function changeText() {
     const randomIndex = Math.floor(Math.random() * texts.length);
     textElement.textContent = texts[randomIndex];
-    textElement.style.color = `hsl(${Math.random() * 360}, 80%, 50%)`; // Random color
+    textElement.style.color = hsl(${Math.random() * 360}, 80%, 50%); // Random color
 }
 
 // Change text every 5 seconds
