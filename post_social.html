@@ -455,9 +455,7 @@ video::-webkit-media-controls {
         <div id="postContainer"></div>
     </div>
 <!-- Floating Back Button (Independent at Left-Top) -->
-<button class="back-btn" onclick="window.location.href='maininterface.html'">
-    <i class="fas fa-arrow-left"></i>
-</button>
+
     <!-- Logo Image -->
 <img id="logo" src="falcons_logo.png" alt="Logo">
 
@@ -564,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 function logout() {
     firebase.auth().signOut().then(() => {
-        window.location.href = "signin";
+        window.location.href = "signin.html";
     }).catch((error) => {
         alert("Error signing out: " + error.message);
     });
@@ -646,7 +644,7 @@ function displayUsersFromSnapshot(usersArray) {
         const profileImg = document.createElement("img");
         profileImg.classList.add("profile-photo");
         profileImg.addEventListener("click", () => {
-            window.location.href = `profile_of_user?userEmail=${encodeURIComponent(userEmail)}`;
+            window.location.href = `profile_of_user.html?userEmail=${encodeURIComponent(userEmail)}`;
         });
 
         // Create name container
@@ -1131,11 +1129,18 @@ function fetchPosts() {
                             `;
 
                             if (isImageUrl(post.posttext)) {
-    mediaContent = `<img src="${post.posttext}" style="max-width: 100%; max-height: 400px; border-radius: 5px; display: block; margin: 0 auto;">`;
+    mediaContent = `
+        <div style="text-align: center; margin: 10px 0;">
+            <img src="${post.posttext}" 
+                style="max-width: 90%; height: auto; border-radius: 8px; display: inline-block;">
+        </div>`;
 } else if (isVideoUrl(post.posttext)) {
-                               mediaContent = 
-        `<div class="custom-video-container" style="position: relative; width: 100%; max-height: 400px; border-radius: 5px; overflow: hidden; background-color: black;">
-            <video id="video-${postId}" class="custom-video" style="width: 100%; height: auto; display: block;" ontimeupdate="updateVideoTime('${postId}')">
+    mediaContent = `
+        <div class="custom-video-container" 
+            style="position: relative; width: 90%; margin: 10px auto; border-radius: 8px; overflow: hidden; background: black; max-width: 600px;">
+            <video id="video-${postId}" class="custom-video" 
+                style="width: 100%; height: auto; display: block;" 
+                ontimeupdate="updateVideoTime('${postId}')">
                 <source src="${post.posttext}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
