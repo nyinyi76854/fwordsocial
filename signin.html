@@ -220,7 +220,7 @@ function checkUserInDatabase(email) {
     db.collection("users").where("email", "==", email).get()
         .then((querySnapshot) => {
             if (!querySnapshot.empty) {
-                window.location.href = "post_social";
+                window.location.href = "post_social.html";
             } else {
                 document.getElementById("androidMessage").style.display = "block";
             }
